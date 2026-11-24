@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Listing
 from django.utils import timezone
 from django.core.paginator import Paginator
@@ -16,4 +16,7 @@ def index(request):
 
 
 def listing(request, listing_id):
-    pass
+    listing = get_object_or_404(Listing, pk=listing_id)
+    current_time = timezone.localtime().time()
+    context = {"listing": listing, "current_time": current_time}
+    return render(request, "listings/listing.html", context)
