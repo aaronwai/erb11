@@ -40,14 +40,20 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
 ]
-APPS = ["pages.apps.PagesConfig"]
+APPS = [
+    "pages.apps.PagesConfig",
+    "listings.apps.ListingsConfig",
+    "chefs.apps.ChefsConfig",
+]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = ["debug_toolbar"]
 
 INSTALLED_APPS = DJANGO_APPS + APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -82,8 +88,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "erb11",
+        "USER": "postgres",
+        "PASSWORD": "1234",
+        "HOST": "localhost",
     }
 }
 
@@ -130,3 +139,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "config/static")]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"

@@ -1,6 +1,7 @@
 <!-- prettier-ignore -->
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block content %}
+{% load static %}
 <!--prettier-ignore -->
 <section id="showcase-inner" class="py-5 text-white">
       <div class="container">
@@ -36,9 +37,8 @@
           Food Agent brings together restaurant discovery, curated
           recommendations, and neighborhood favorites in one place.
         </p>
-        {% comment %} img {% endcomment %}
         <img
-          src="assets/img/about.jpg"
+          src={% static 'img/about.jpg' %}
           alt="Restaurant discovery"
           class="img-fluid mb-4"
         />
