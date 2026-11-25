@@ -49,7 +49,8 @@
           />
           <div class="card-img-overlay">
             <h2>
-              <span class="badge badge-danger text-white">{{listing.promo_badge_text | title}}</span>
+              <span class="badge badge-danger text-white">
+                {{listing.promo_badge_text | title}}  </span>
             </h2>
           </div>
           <div class="card-body">
@@ -96,18 +97,17 @@
               <div class="col-6"><i class="fas fa-star"></i> {{listing.rating}}</div>
               <div class="col-6"><i class="fas fa-clock"></i> 
              <!-- prettier-ignore--> 
-            {% if listing.opening_hours > listing.closing_hours %}
-            {% if current_time >= listing.opening_hours or current_time < listing.closing_hours %}Open{% else %}Closed{% endif %}
+              {% if listing.opening_hours > listing.closing_hours %}
+                {% if current_time >= listing.opening_hours or current_time <       listing.closing_hours %}
+              Open{% else %}Closed{% endif %}
             {% else %}
-{% if current_time >= listing.opening_hours and current_time < listing.closing_hours %}Open
-{% else %}Closed{% endif %}
+            {% if current_time >= listing.opening_hours and current_time < listing.closing_hours %}Open
+            {% else %}Closed{% endif %}
             {% endif %}
              <!-- prettier-ignore-->
             </div>
             </div>
-            <a href="{% url 'listings:listing' listing.id %}" class="btn btn-danger btn-block mt-3"
-              >View Details</a
-            >
+            <a href="{% url 'listings:listing' listing.id %}" class="btn btn-danger btn-block mt-3">View Details</a>
           </div>
         </div>
       </div>
@@ -117,6 +117,7 @@
       </div>
       {% endif %}
     </div>
+    <!-- paginator-->
     {% if listings.has_other_pages %}
     <div class="row">
       <div class="col-md-12">
