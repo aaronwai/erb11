@@ -11,12 +11,11 @@
             <h1 class="display-4 mb-4">Find the perfect place to eat</h1>
             <p class="lead">Search by district, cuisine, price, and current availability.</p>
             <div class="search">
-                {% comment %} search {% endcomment %}
-              <form action="search.html">
+              <form action="{% url 'pages:search' %}">
                 <div class="form-row">
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">Keywords</label>
-                    <input type="text" name="keywords" class="form-control" placeholder="Cuisine, dish, or restaurant" />
+                    <input type="text" name="keywords" class="form-control" placeholder="Cuisine, dish, or restaurant" value="{{values.keywords}}" />
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">District</label>
@@ -28,8 +27,8 @@
                     </select>
                   </div>
                   <div class="col-md-4 mb-3">
-                    <label class="sr-only">Category</label>
-                    <select name="category" class="form-control">
+                    <label class="sr-only">Cuisine</label>
+                    <select name="cuisine" class="form-control">
                       <option selected="true" disabled="disabled">Cuisine (All)</option>
                       {% for key,value in cuisine_choices.items %}
                       <option value="{{key}}">{{value}}</option>
