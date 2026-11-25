@@ -1,0 +1,155 @@
+<!-- prettier-ignore-->
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+<!-- prettier-ignore-->
+<section id="showcase">
+      <div class="container text-center">
+        <div class="home-search p-5">
+          <div class="overlay p-5">
+            <h1 class="display-4 mb-4">Find the perfect place to eat</h1>
+            <p class="lead">Search by district, cuisine, price, and current availability.</p>
+            <div class="search">
+                {% comment %} search {% endcomment %}
+              <form action="search.html">
+                <div class="form-row">
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Keywords</label>
+                    <input type="text" name="keywords" class="form-control" placeholder="Cuisine, dish, or restaurant" />
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">District</label>
+                    <select name="district" class="form-control">
+                      <option selected="true" disabled="disabled">District (All)</option>
+                       {% for key,value in district_choices.items %}
+                      <option value="{{key}}">{{value}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Category</label>
+                    <select name="category" class="form-control">
+                      <option selected="true" disabled="disabled">Cuisine (All)</option>
+                      {% for key,value in cuisine_choices.items %}
+                      <option value="{{key}}">{{value}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-6 mb-3">
+                    <label class="sr-only">Price</label>
+                    <select name="price" class="form-control">
+                      <option selected="true" disabled="disabled">Price Range</option>
+                      {% for key,value in price_choices.items %}
+                      <option value="{{key}}">{{value}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="sr-only">Open Now</label>
+                    <select name="open" class="form-control">
+                      <option selected="true" disabled="disabled">Open Now</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-danger btn-block mt-4" type="submit">Search Restaurants</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="listings" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-4">Search Results</h3>
+    <div class="row">
+      <!-- Listing 1 -->
+      <!-- prettier-ignore -->
+      {% if listings %}
+      {% for listing in listings %}
+      <!-- prettier-ignore -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img
+            src={{listing.photo_main.url}}
+            class="card-img-top"
+            alt="restaurant"
+          />
+          <div class="card-img-overlay">
+            <h2>
+              <span class="badge badge-danger text-white">
+                {{listing.promo_badge_text | title}}  </span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="listing-heading text-center">
+              <h4 class="text-danger">{{listing.title | title}}</h4>
+              <span class="badge badge-cuisine">{{listing.cuisine_choices | title}}</span>
+              <p class="text-muted">
+                <i class="fas fa-map-marker-alt"></i>{{listing.district}}
+              </p>
+            </div>
+            <hr />
+            <div class="row py-2 text-secondary">
+              <div class="col-6"><i class="fas fa-utensils"></i> {{listing.specialty}}</div>
+              <div class="col-6">
+                <i class="fas fa-dollar-sign"></i>{{listing.price | intcomma}}/person
+              </div>
+            </div>
+            <div class="row py-2 text-secondary">
+              <div class="col-6">
+                <i class="fas fa-calendar-alt"></i> 
+               <!-- prettier-ignore--> 
+                {% if listing.accept_reservations %}Reservations 
+                <!-- prettier-ignore-->
+                {% else %} Walk-in {% endif %}
+              </div>
+              <div class="col-6"><i class="fas fa-star"></i> {{listing.ambiance_note}}</div>
+            </div>
+            <div class="row py-2 text-secondary">
+              <div class="col-6"><i class="fas fa-wifi"></i> 
+               <!-- prettier-ignore--> 
+                {% if listing.has_wifi %} Free Wi-Fi {% else %}
+                <!-- prettier-ignore-->
+                Not Provided {% endif %}
+              </div>
+              <div class="col-6">
+                <i class="fas fa-motorcycle"></i>
+                <!-- prettier-ignore-->  
+                {% if listing.has_delivery %} Delivery Charges {% else %}
+                <!-- prettier-ignore--> 
+                Not Provided {% endif %}
+              </div>
+            </div>
+            <div class="row py-2 text-secondary">
+              <div class="col-6"><i class="fas fa-star"></i> {{listing.rating}}</div>
+              <div class="col-6"><i class="fas fa-clock"></i> 
+             <!-- prettier-ignore--> 
+              {% if listing.opening_hours > listing.closing_hours %}
+                {% if current_time >= listing.opening_hours or current_time <       listing.closing_hours %}
+              Open{% else %}Closed{% endif %}
+            {% else %}
+            {% if current_time >= listing.opening_hours and current_time < listing.closing_hours %}Open
+            {% else %}Closed{% endif %}
+            {% endif %}
+             <!-- prettier-ignore-->
+            </div>
+            </div>
+            <a href="{% url 'listings:listing' listing.id %}" class="btn btn-danger btn-block mt-3">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>No Listing Available</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
