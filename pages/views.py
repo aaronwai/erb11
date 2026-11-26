@@ -54,12 +54,16 @@ def search(request):
                 queryset_list = queryset_list.filter(price__gt=400)
     if "open" in request.GET:
         open = request.GET["open"]
-        if open == "yes":
+        if open == "Yes":
+            queryset_list = queryset_list.filter(opening_hours__lte=current_time)
+        if open == "No":
             queryset_list = queryset_list.filter(opening_hours__gte=current_time)
     paginator = Paginator(queryset_list, 3)
     page_number = request.GET.get("page")
     paged_listings = paginator.get_page(page_number)
-
+    get_params = request.GET.copy()
+    get_params.pop("page", None)
+    get_params = get_params.urlencode()
     context = {
         "listings": paged_listings,
         "current_time": current_time,
@@ -67,5 +71,6 @@ def search(request):
         "cuisine_choices": cuisine_choices,
         "price_choices": price_choices,
         "values": request.GET,
+        "get_params": get_params,
     }
     return render(request, "pages/search.html", context)

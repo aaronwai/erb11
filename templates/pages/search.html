@@ -20,18 +20,18 @@
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">District</label>
                     <select name="district" class="form-control">
-                      <option selected="true" disabled="disabled">District (All)</option>
+                      <option {% if not values.district %} selected="true" {% endif %} value="">District (All)</option>
                        {% for key,value in district_choices.items %}
-                      <option value="{{key}}">{{value}}</option>
+                      <option value="{{key}}" {% if values.district == key %} selected="true" {% endif %}>{{value}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="sr-only">Cuisine</label>
                     <select name="cuisine" class="form-control">
-                      <option selected="true" disabled="disabled">Cuisine (All)</option>
+                      <option {% if not values.cuisine %} selected="true" {% endif %}  value=''>Cuisine (All)</option>
                       {% for key,value in cuisine_choices.items %}
-                      <option value="{{key}}">{{value}}</option>
+                      <option value="{{key}}" {% if values.cuisine == key %} selected="true" {% endif %}>{{value}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -40,18 +40,18 @@
                   <div class="col-md-6 mb-3">
                     <label class="sr-only">Price</label>
                     <select name="price" class="form-control">
-                      <option selected="true" disabled="disabled">Price Range</option>
+                      <option {% if not values.price %} selected="true" {% endif %}  value=''>Price Range</option>
                       {% for key,value in price_choices.items %}
-                      <option value="{{key}}">{{value}}</option>
+                      <option value="{{key}}" {% if values.price == key %} selected="true" {% endif %}>{{value}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label class="sr-only">Open Now</label>
                     <select name="open" class="form-control">
-                      <option selected="true" disabled="disabled">Open Now</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option {% if not values.open %} selected="true" {% endif %}  value=''>Open Now</option>
+                      <option value="Yes" {% if values.open == "Yes" %} selected="true" {% endif %}>Yes</option>
+                      <option value="No" {% if values.open == "No" %} selected="true" {% endif %}>No</option>
                     </select>
                   </div>
                 </div>
@@ -149,6 +149,54 @@
       </div>
       {% endif %}
     </div>
+    <!-- paginator-->
+    {% if listings.has_other_pages %}
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="pagination">
+          {% if listings.has_previous %}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="?{{get_params}}&page={{listings.previous_page_number}}"
+              >&laquo;</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">&laquo;</a>
+          </li>
+          <!-- prettier-ignore -->
+          {% endif %} 
+          {% for i in listings.paginator.page_range %} 
+          {% if i == listings.number %}
+          <!-- prettier-ignore -->
+          <li class="page-item active">
+            <a class="page-link">{{i}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?{{get_params}}&page={{i}}">{{i}}</a>
+          </li>
+          <!-- prettier-ignore -->
+          {% endif %}
+          {% endfor %}
+          {% if listings.has_next %}
+          <!-- prettier-ignore -->
+          <li class="page-item">
+            <a class="page-link" href="?{{get_params}}&page={{listings.next_page_number}}"
+              >&raquo;</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">&raquo;</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

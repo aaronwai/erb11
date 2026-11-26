@@ -30,3 +30,10 @@ a.button {
 .brands {
   margin-left: 15px;
 }
+.submit-row input.default {
+  background: #ec5b5c;
+  color: white;
+}
+symbol {
+  color: #ec5b5c;
+}
