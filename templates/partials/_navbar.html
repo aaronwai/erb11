@@ -27,15 +27,15 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item mr-3">
-          {% comment %} register {% endcomment %}
-          <a class="nav-link" href="register.html"
+        <li  {% if '/accounts/register' in request.path %} class="nav-item active mr-3"
+           {% else %} class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href="{% url 'accounts:register' %}"
             ><i class="fas fa-user-plus"></i> Register</a
           >
         </li>
-        <li class="nav-item">
-          {% comment %} login {% endcomment %}
-          <a class="nav-link" href="login.html"
+        <li {% if '/accounts/login' in request.path %} class="nav-item active mr-3"
+           {% else %} class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href="{% url 'accounts:login' %}"
             ><i class="fas fa-sign-in-alt"></i> Login</a
           >
         </li>

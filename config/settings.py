@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 load_dotenv()
@@ -46,6 +47,7 @@ APPS = [
     "pages.apps.PagesConfig",
     "listings.apps.ListingsConfig",
     "chefs.apps.ChefsConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 THIRD_PARTY_APPS = ["debug_toolbar"]
@@ -146,3 +148,5 @@ INTERNAL_IPS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+MESSAGE_TAGS = {messages.ERROR: "danger", messages.SUCCESS: "success"}
