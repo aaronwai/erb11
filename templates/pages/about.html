@@ -18,7 +18,7 @@
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <a href={% url "pages:index" %} class="text-danger"
+          <a href="{% url "pages:index" %}" class="text-danger"
             ><i class="fas fa-home"></i> Home</a
           >
         </li>
@@ -49,22 +49,26 @@
         </p>
       </div>
       <div class="col-md-4 mt-4 mt-md-0">
+        <!-- features-->
+        {% if features %}
+        {% for feature in features %}
         <div class="card shadow-sm">
-            {% comment %} img {% endcomment %}
           <img
             class="card-img-top"
-            src="assets/img/staffs/kyle.jpg"
-            alt="Food curator"
+            src="{{feature.portrait.url}}"
+            alt="{{feature.position}}"
           />
           <div class="card-body">
-            <h5 class="card-title mb-2">Featured Curator</h5>
-            <h6 class="text-danger mb-3">Kyle Chan</h6>
+            <h5 class="card-title mb-2">Featured {{feature.position}}</h5>
+            <h6 class="text-danger mb-3">{{feature.name | title}}</h6>
             <p class="card-text mb-0">
-              Kyle explores the city’s newest restaurants and highlights the
-              best food experiences for every occasion.
-            </p>
+              {{feature.bio}}
+            </p>  
           </div>
         </div>
+        {% endfor %}
+        {% endif %}
+        <!-- features-->
       </div>
     </div>
   </div>
@@ -77,56 +81,35 @@
     simple and enjoyable.
   </h4>
   <hr />
-  {% comment %} listings.html {% endcomment %}
-  <a href="listings.html" class="btn btn-danger text-white btn-lg"
+  <a href="{% url 'listings:index' %}" class="btn btn-danger text-white btn-lg"
     >View Featured Restaurants</a
   >
 </section>
 <!-- team -->
+{% if staffs %}
 <section id="team" class="py-5">
   <div class="container">
     <h2 class="text-center">Our Food Team</h2>
     <div class="row text-center">
+      
+      {% for staff in staffs %}
       <div class="col-md-4">
-        {% comment %} img {% endcomment %}
         <img
-          src="assets/img/staffs/kyle.jpg"
-          alt="Kyle"
+          src="{{staff.portrait.url}}"
+          alt="{{staff.name}}"
           class="rounded-circle mb-3"
         />
-        <h4>Kyle Chan</h4>
-        <p class="text-danger"><i class="fas fa-utensils"></i> Food Curator</p>
+        <h4>{{staff.name | title}}</h4>
+        <p class="text-danger"><i class="fas fa-utensils"></i> {{staff.position}}</p>
         <hr />
-        <p><i class="fas fa-phone"></i> (852)-555-5555</p>
-        <p><i class="fas fa-envelope-open"></i> kyle@foodagent.co</p>
+        <p><i class="fas fa-phone"></i> (852)-{{staff.phone}}</p>
+        <p><i class="fas fa-envelope-open"></i> {{staff.email}}</p>
       </div>
-      <div class="col-md-4">
-        {% comment %} img {% endcomment %}
-        <img
-          src="assets/img/staffs/mark.jpg"
-          alt="Mark"
-          class="rounded-circle mb-3"
-        />
-        <h4>Mark Lee</h4>
-        <p class="text-danger">Dining Guide</p>
-        <hr />
-        <p><i class="fas fa-phone"></i> (852)-444-4444</p>
-        <p><i class="fas fa-envelope-open"></i> mark@foodagent.co</p>
-      </div>
-      <div class="col-md-4">
-        {% comment %} img {% endcomment %}
-        <img
-          src="assets/img/staffs/jenny.jpg"
-          alt="Jenny"
-          class="rounded-circle mb-3"
-        />
-        <h4>Jenny Cheung</h4>
-        <p class="text-danger">Restaurant Reviewer</p>
-        <hr />
-        <p><i class="fas fa-phone"></i> (852)-333-3333</p>
-        <p><i class="fas fa-envelope-open"></i> jenny@foodagent.co</p>
-      </div>
+      
+      {% endfor %}
+     
     </div>
   </div>
 </section>
+ {% endif %}
 {% endblock %}

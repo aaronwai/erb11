@@ -26,6 +26,29 @@
           <a class="nav-link" href={% url "pages:about" %}>About</a>
         </li>
       </ul>
+      <!-- after login -->
+      {% if user.is_authenticated %}
+<ul class="navbar-nav ml-auto">
+  <!-- dashboard -->
+        <li  {% if '/accounts/dashboard' == request.path %} class="nav-item active mr-3"
+           {% else %} class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href="{% url 'accounts:dashboard' %}"
+            ><i class="fas fa-user-plus"></i> Welcome {{user.username}}</a
+          >
+        </li>
+        <!-- logout -->
+        <li class="nav-item mr-3">
+          <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"
+            ><i class="fas fa-sign-in-alt"></i> Logout</a
+          >
+          <form action="{% url 'accounts:logout' %}" method="POST" id="logout">
+            {% csrf_token %}
+            <input type='hidden' />
+          </form>  
+        </li>
+      </ul>
+      {% else %}
+      <!-- before login -->
       <ul class="navbar-nav ml-auto">
         <li  {% if '/accounts/register' in request.path %} class="nav-item active mr-3"
            {% else %} class="nav-item mr-3" {% endif %}>
@@ -40,6 +63,7 @@
           >
         </li>
       </ul>
+      {% endif %}
     </div>
   </div>
 </nav>

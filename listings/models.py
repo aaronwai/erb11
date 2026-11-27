@@ -1,7 +1,10 @@
-from django.db import models
 from datetime import time
+
+from django.db import models
+
 from chefs.models import Chef
-from .choices import district_choices, cuisine_choices
+
+from .choices import cuisine_choices, district_choices
 
 
 # Create your models here.

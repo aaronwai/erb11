@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from listings.models import Listing
-from django.utils import timezone
-from listings.choices import district_choices, cuisine_choices, price_choices
-from django.db.models import Q
 from django.core.paginator import Paginator
+from django.db.models import Q
+from django.shortcuts import render
+from django.utils import timezone
+
+from accounts.models import Staff
+from listings.choices import cuisine_choices, district_choices, price_choices
+from listings.models import Listing
 
 
 # Create your views here.
@@ -21,7 +23,10 @@ def index(request):
 
 
 def about(request):
-    return render(request, "pages/about.html")
+    staffs = Staff.objects.order_by("-hire_date")[:3]
+    features = Staff.objects.filter(is_promo=True)
+    context = {"staffs": staffs, "features": features}
+    return render(request, "pages/about.html", context)
 
 
 def search(request):

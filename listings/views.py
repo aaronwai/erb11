@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Listing
-from django.utils import timezone
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
+
+from .models import Listing
 
 
 # Create your views here.

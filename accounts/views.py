@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
-from django.contrib import messages, auth
+from django.shortcuts import redirect, render
 
 
 # Create your views here.
@@ -21,7 +21,9 @@ def login(request):
 
 
 def logout(request):
-    pass
+    if request.method == "POST":
+        auth.logout(request)
+        return redirect("pages:index")
 
 
 def register(request):

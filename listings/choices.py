@@ -31,3 +31,9 @@ cuisine_choices = {
 }
 
 price_choices = {"Budget": "Budget", "Average": "Average", "Premium": "Premium"}
+
+position_choices = {
+    "Editor": "Editor",
+    "Manager": "Manager",
+    "Chief Writer": "Chief Writer",
+}
